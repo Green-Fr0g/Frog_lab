@@ -24,3 +24,7 @@
 | AMP_for_hardware | `/home/zhang/code/train/gym/AMP_for_hardware` | |
 | instinct_rl    | `/home/zhang/code/train/lab/instict/instinct_rl` | |
 | amp_mjlab      | `/home/zhang/code/train/lab/AMP_mjlab`      | |
+
+## 要求
+不能删除和修改这个项目以外的文件以及相应的内容
+因为电脑配置的原因，不可以启动isaacsim仿真进行验证

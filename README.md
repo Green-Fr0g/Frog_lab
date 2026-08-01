@@ -1,5 +1,22 @@
 # Template for Isaac Lab Projects
 
+## G1 locomotion
+
+Manager-based velocity locomotion is available for both Unitree G1 variants:
+
+```bash
+python scripts/list_envs.py --keyword FrogLab-Isaac-Velocity
+python scripts/rsl_rl/train.py --task FrogLab-Isaac-Velocity-Rough-Unitree-G1-29DOF-v0
+python scripts/rsl_rl/train.py --task FrogLab-Isaac-Velocity-Flat-Unitree-G1-23DOF-v0
+```
+
+The two variants have independent environment registrations and PPO configurations under
+`tasks/manager_based/locomotion/velocity/config/humanoid/g1_23dof` and
+`tasks/manager_based/locomotion/velocity/config/humanoid/g1_29dof`.
+
+The URDF and meshes are stored under `source/model/g1` and are loaded directly by the corresponding
+G1 asset configuration.
+
 ## Overview
 
 This project/repository serves as a template for building projects or extensions based on Isaac Lab.
@@ -28,9 +45,6 @@ It allows you to develop in an isolated environment, outside of the core Isaac L
 - Verify that the extension is correctly installed by:
 
     - Listing the available tasks:
-
-        Note: It the task name changes, it may be necessary to update the search pattern `"Template-"`
-        (in the `scripts/list_envs.py` file) so that it can be listed.
 
         ```bash
         # use 'FULL_PATH_TO_isaaclab.sh|bat -p' instead of 'python' if Isaac Lab is not installed in Python venv or conda

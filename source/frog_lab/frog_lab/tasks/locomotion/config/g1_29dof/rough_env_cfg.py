@@ -4,7 +4,7 @@ from isaaclab.utils import configclass
 
 import frog_lab.tasks.locomotion.mdp as mdp
 from frog_lab.assets.g1_29dof import G1_29DOF_CFG
-from source.frog_lab.frog_lab.tasks.locomotion.locomotion_env_cfg import LocomotionVelocityRoughEnvCfg
+from frog_lab.tasks.locomotion.locomotion_env_cfg import LocomotionVelocityRoughEnvCfg
 
 
 @configclass
@@ -100,7 +100,7 @@ class G1_29DOFRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
         self.rewards.joint_acc_l2.params["asset_cfg"].joint_names = [".*_hip_.*", ".*_knee_joint"]
 
         self.rewards.joint_deviation_arms.weight = -0.1
-        self.rewards.joint_deviation_arms.params["asset_cfg"].joint_names =[
+        self.rewards.joint_deviation_arms.params["asset_cfg"].joint_names = [
                     ".*_shoulder_pitch_joint",
                     ".*_shoulder_roll_joint",
                     ".*_shoulder_yaw_joint",
@@ -108,9 +108,9 @@ class G1_29DOFRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
                     ".*_wrist_roll_joint",
                     ".*_wrist_pitch_joint",
                     ".*_wrist_yaw_joint",
-                ],
+                ]
         self.rewards.joint_deviation_hip.weight = -0.1
-        self.rewards.joint_deviation_hip.params["asset_cfg"].joint_names =[".*_hip_yaw.", ".*_hip_roll."]
+        self.rewards.joint_deviation_hip.params["asset_cfg"].joint_names = [".*_hip_yaw.*", ".*_hip_roll.*"]
         self.rewards.joint_deviation_torso.weight = -0.1
         self.rewards.joint_deviation_torso.params["asset_cfg"].joint_names = ["waist_.*"]
         
@@ -149,8 +149,8 @@ class G1_29DOFRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
         self.terminations.base_height.params["minimum_height"] = 0.2
 
         # Curriculum
-        self.curriculum.command_levels_lin_vel = (0.1, 1.0)
-        self.curriculum.command_levels_ang_vel = (0.1, 1.0)
+        self.curriculum.command_levels_lin_vel.params["range_multiplier"] = (0.1, 1.0)
+        self.curriculum.command_levels_ang_vel.params["range_multiplier"] = (0.1, 1.0)
 
         # Commands
         self.commands.base_velocity.ranges.lin_vel_x = (-1.0, 1.0)

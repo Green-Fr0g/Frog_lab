@@ -5,7 +5,7 @@ import gymnasium as gym
 from . import agents
 
 gym.register(
-    id="Rough-G1-29",
+    id="FrogLab-Isaac-Velocity-Rough-Unitree-G1-29DOF-v0",
     entry_point="isaaclab.envs:ManagerBasedRLEnv",
     disable_env_checker=True,
     kwargs={
@@ -15,7 +15,7 @@ gym.register(
 )
 
 gym.register(
-    id="Flat-G1-29",
+    id="FrogLab-Isaac-Velocity-Flat-Unitree-G1-29DOF-v0",
     entry_point="isaaclab.envs:ManagerBasedRLEnv",
     disable_env_checker=True,
     kwargs={

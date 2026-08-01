@@ -11,8 +11,8 @@ python scripts/rsl_rl/train.py --task FrogLab-Isaac-Velocity-Flat-Unitree-G1-23D
 ```
 
 The two variants have independent environment registrations and PPO configurations under
-`tasks/manager_based/locomotion/velocity/config/humanoid/g1_23dof` and
-`tasks/manager_based/locomotion/velocity/config/humanoid/g1_29dof`.
+`source/frog_lab/frog_lab/tasks/locomotion/config/g1_23dof` and
+`source/frog_lab/frog_lab/tasks/locomotion/config/g1_29dof`.
 
 The URDF and meshes are stored under `source/model/g1` and are loaded directly by the corresponding
 G1 asset configuration.

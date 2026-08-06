@@ -6,8 +6,8 @@ Manager-based velocity locomotion is available for both Unitree G1 variants:
 
 ```bash
 python scripts/list_envs.py --keyword FrogLab-Isaac-Velocity
-python scripts/rsl_rl/train.py --task FrogLab-Isaac-Velocity-Rough-Unitree-G1-29DOF-v0
-python scripts/rsl_rl/train.py --task FrogLab-Isaac-Velocity-Flat-Unitree-G1-23DOF-v0
+python scripts/locomotion/rsl_rl/train.py --task FrogLab-Isaac-Velocity-Rough-Unitree-G1-29DOF-v0
+python scripts/locomotion/rsl_rl/train.py --task FrogLab-Isaac-Velocity-Flat-Unitree-G1-23DOF-v0
 ```
 
 The two variants have independent environment registrations and PPO configurations under

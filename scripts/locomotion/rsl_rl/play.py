@@ -13,7 +13,7 @@ import sys
 from isaaclab.app import AppLauncher
 
 # local imports
-import cli_args  # isort: skip
+import scripts.locomotion.rsl_rl.cli_args as cli_args  # isort: skip
 
 # add argparse arguments
 parser = argparse.ArgumentParser(description="Train an RL agent with RSL-RL.")
@@ -24,6 +24,12 @@ parser.add_argument(
 )
 parser.add_argument("--num_envs", type=int, default=None, help="Number of environments to simulate.")
 parser.add_argument("--task", type=str, default=None, help="Name of the task.")
+parser.add_argument(
+    "--wandb_path",
+    type=str,
+    default=None,
+    help="W&B run path (entity/project/run) or a model file in that run.",
+)
 parser.add_argument(
     "--agent", type=str, default="rsl_rl_cfg_entry_point", help="Name of the RL agent configuration entry point."
 )
@@ -118,7 +124,29 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
     log_root_path = os.path.join("logs", "rsl_rl", agent_cfg.experiment_name)
     log_root_path = os.path.abspath(log_root_path)
     print(f"[INFO] Loading experiment from directory: {log_root_path}")
-    if args_cli.use_pretrained_checkpoint:
+    if args_cli.wandb_path:
+        import wandb
+
+        run_path = args_cli.wandb_path
+        requested_file = None
+        path_parts = run_path.split("/")
+        if path_parts[-1].endswith(".pt"):
+            requested_file = path_parts.pop()
+            run_path = "/".join(path_parts)
+        wandb_run = wandb.Api().run(run_path)
+        model_files = [file.name for file in wandb_run.files() if file.name.startswith("model") and file.name.endswith(".pt")]
+        if requested_file is None:
+            if not model_files:
+                raise FileNotFoundError(f"No model checkpoint was found in W&B run: {run_path}")
+            model_files.sort(key=lambda name: int(name.rsplit("_", 1)[-1].split(".")[0]))
+            requested_file = model_files[-1]
+        if requested_file not in model_files:
+            raise FileNotFoundError(f"Checkpoint {requested_file!r} was not found in W&B run: {run_path}")
+        download_dir = os.path.join(log_root_path, "wandb")
+        wandb_run.file(requested_file).download(download_dir, replace=True)
+        resume_path = os.path.join(download_dir, requested_file)
+        print(f"[INFO]: Loading model checkpoint from W&B: {run_path}/{requested_file}")
+    elif args_cli.use_pretrained_checkpoint:
         resume_path = get_published_pretrained_checkpoint("rsl_rl", train_task_name)
         if not resume_path:
             print("[INFO] Unfortunately a pre-trained checkpoint is currently unavailable for this task.")
